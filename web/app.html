@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Todo Memory – Your second brain, everywhere.">
+    <title>Todo Memory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container" id="app">
+        <!-- Sidebar Overlay (mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar__brand">TODO MEMORY</div>
+
+            <div class="sidebar__label">CATEGORIES</div>
+            <div class="category-list" id="category-list">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="sidebar__footer">
+                <button class="sidebar__footer-btn" onclick="window.location.href='settings.html'">
+                    ⚙️ <span>Settings</span>
+                </button>
+                <button class="sidebar__footer-btn" onclick="handleLogout()">
+                    🚪 <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="content__header">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                    <h1 class="content__title" id="content-title">📝 ToDo</h1>
+                </div>
+                <div>
+                    <button class="btn btn--primary" id="add-btn" onclick="handleAdd()">+ Add</button>
+                </div>
+            </div>
+
+            <div class="content__body" id="content-body">
+                <!-- Populated by JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Task Modal -->
+    <div class="modal-overlay hidden" id="task-modal">
+        <div class="modal">
+            <div class="modal__header">
+                <span class="modal__title" id="task-modal-title">New Task</span>
+                <button class="modal__close" onclick="closeTaskModal()">✕</button>
+            </div>
+            <div class="modal__body">
+                <div class="form-group">
+                    <label class="form-label" for="task-title">Title</label>
+                    <input type="text" class="input" id="task-title" placeholder="Task title" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="task-desc">Description</label>
+                    <textarea class="input textarea" id="task-desc" placeholder="Optional description"></textarea>
+                </div>
+                <div style="display:flex; gap:12px;">
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label" for="task-due-date">Due Date</label>
+                        <input type="date" class="input" id="task-due-date">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label" for="task-due-time">Due Time</label>
+                        <input type="time" class="input" id="task-due-time">
+                    </div>
+                </div>
+                <div style="display:flex; gap:12px;">
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label" for="task-repeat">Repeat</label>
+                        <select class="input" id="task-repeat">
+                            <option value="">None</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label" for="task-interval">Interval</label>
+                        <input type="number" class="input" id="task-interval" min="1" value="1">
+                    </div>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button class="btn btn--secondary" onclick="closeTaskModal()">Cancel</button>
+                <button class="btn btn--primary" id="task-save-btn" onclick="saveTask()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Key Modal -->
+    <div class="modal-overlay hidden" id="apikey-modal">
+        <div class="modal">
+            <div class="modal__header">
+                <span class="modal__title" id="apikey-modal-title">New API Key</span>
+                <button class="modal__close" onclick="closeApiKeyModal()">✕</button>
+            </div>
+            <div class="modal__body">
+                <div class="form-group">
+                    <label class="form-label" for="apikey-name">Name</label>
+                    <input type="text" class="input" id="apikey-name" placeholder="e.g. OpenAI" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="apikey-value">Key Value</label>
+                    <input type="text" class="input" id="apikey-value" placeholder="sk-...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="apikey-endpoint">Endpoint URL</label>
+                    <input type="text" class="input" id="apikey-endpoint" placeholder="https://api.openai.com/v1">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="apikey-docs">Documentation URL</label>
+                    <input type="text" class="input" id="apikey-docs" placeholder="https://docs.example.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="apikey-notes">Notes</label>
+                    <textarea class="input textarea" id="apikey-notes" placeholder="Optional notes"></textarea>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button class="btn btn--secondary" onclick="closeApiKeyModal()">Cancel</button>
+                <button class="btn btn--primary" id="apikey-save-btn" onclick="saveApiKey()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Server Settings Modal -->
+    <div class="modal-overlay hidden" id="server-modal">
+        <div class="modal">
+            <div class="modal__header">
+                <span class="modal__title">SERVER SETTINGS</span>
+                <button class="modal__close" onclick="closeServerModal()">✕</button>
+            </div>
+            <div class="modal__body">
+                <div class="alert alert--error hidden" id="server-modal-error"></div>
+                <div class="form-group">
+                    <label class="form-label" for="modal-server-url">Server URL</label>
+                    <input type="text" class="input" id="modal-server-url" placeholder="http://192.168.1.133:3000">
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button class="btn btn--secondary" onclick="closeServerModal()">Cancel</button>
+                <button class="btn btn--primary" id="server-save-btn" onclick="saveServerUrl()">Save & Test</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Todo Memory – Account settings and preferences.">
+    <title>Todo Memory – Settings</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .settings-page {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            overflow-y: auto;
+        }
+
+        .settings-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .settings-nav__brand {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .settings-nav__back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 14px;
+            transition: color .2s;
+        }
+
+        .settings-nav__back:hover {
+            color: var(--text-primary);
+        }
+
+        .settings-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 32px 20px;
+        }
+
+        .settings-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 32px;
+        }
+
+        .settings-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .settings-section__title {
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .settings-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .settings-info:last-child {
+            border-bottom: none;
+        }
+
+        .settings-info__label {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .settings-info__value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .danger-zone {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .danger-zone .settings-section__title {
+            color: var(--accent-danger);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="settings-page">
+        <!-- Top bar -->
+        <nav class="settings-nav">
+            <a href="app.html" class="settings-nav__brand">TODO MEMORY</a>
+            <a href="app.html" class="settings-nav__back">← Back to App</a>
+        </nav>
+
+        <div class="settings-container">
+            <h1 class="settings-title">⚙️ Settings</h1>
+
+            <!-- Account Info -->
+            <div class="settings-section">
+                <div class="settings-section__title">Account</div>
+                <div class="settings-info">
+                    <span class="settings-info__label">Username</span>
+                    <span class="settings-info__value" id="settings-username">—</span>
+                </div>
+                <div class="settings-info">
+                    <span class="settings-info__label">Member since</span>
+                    <span class="settings-info__value" id="settings-joined">—</span>
+                </div>
+            </div>
+
+            <!-- Server Settings -->
+            <div class="settings-section">
+                <div class="settings-section__title">Server Connection</div>
+                <div class="form-group" style="margin-bottom:16px;">
+                    <label class="form-label" for="settings-server-url">Server URL</label>
+                    <input type="text" class="input" id="settings-server-url" placeholder="http://192.168.1.133:3000">
+                </div>
+                <div style="display:flex; gap:12px;">
+                    <button class="btn btn--primary" style="flex:1;" id="settings-test-btn"
+                        onclick="testServerConnection()">Save & Test</button>
+                </div>
+                <div class="alert alert--error hidden" id="settings-server-error" style="margin-top:12px;"></div>
+                <div class="alert alert--success hidden" id="settings-server-success" style="margin-top:12px;"></div>
+            </div>
+
+            <!-- Change Password -->
+            <div class="settings-section">
+                <div class="settings-section__title">Change Password</div>
+                <div class="form-group" style="margin-bottom:12px;">
+                    <label class="form-label" for="current-password">Current Password</label>
+                    <input type="password" class="input" id="current-password" placeholder="Enter current password">
+                </div>
+                <div class="form-group" style="margin-bottom:12px;">
+                    <label class="form-label" for="new-password">New Password</label>
+                    <input type="password" class="input" id="new-password" placeholder="Enter new password">
+                </div>
+                <div class="form-group" style="margin-bottom:16px;">
+                    <label class="form-label" for="confirm-new-password">Confirm New Password</label>
+                    <input type="password" class="input" id="confirm-new-password" placeholder="Confirm new password">
+                </div>
+                <button class="btn btn--primary" id="change-pw-btn" onclick="changePassword()">Change Password</button>
+                <div class="alert alert--error hidden" id="pw-error" style="margin-top:12px;"></div>
+                <div class="alert alert--success hidden" id="pw-success" style="margin-top:12px;"></div>
+            </div>
+
+            <!-- Appearance -->
+            <div class="settings-section">
+                <div class="settings-section__title">Appearance</div>
+                <div class="settings-info">
+                    <span class="settings-info__label">Theme</span>
+                    <span class="settings-info__value">🌙 Dark (Futuristic)</span>
+                </div>
+                <p style="font-size:13px; color:var(--text-muted); margin-top:8px;">More themes coming soon.</p>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="settings-section danger-zone">
+                <div class="settings-section__title">⚠️ Danger Zone</div>
+                <p style="font-size:14px; color:var(--text-secondary); margin-bottom:16px;">
+                    Permanently delete your account and all associated data. This action cannot be undone.
+                </p>
+                <button class="btn btn--danger" onclick="deleteAccount()">Delete My Account</button>
+            </div>
+
+            <!-- Logout -->
+            <div style="text-align:center; margin-top:12px;">
+                <button class="btn btn--secondary" style="width:100%;" onclick="logoutFromSettings()">🚪 Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="api.js"></script>
+    <script>
+        // ── Auth guard ──
+        (async function init() {
+            if (!isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            try {
+                const data = await authAPI.me();
+                document.getElementById('settings-username').textContent = data.user.username;
+                document.getElementById('settings-joined').textContent = new Date(data.user.created_at).toLocaleDateString();
+            } catch {
+                authAPI.logout();
+                window.location.href = 'login.html';
+                return;
+            }
+            document.getElementById('settings-server-url').value = getApiUrl();
+        })();
+
+        // ── Server URL ──
+        async function testServerConnection() {
+            const errEl = document.getElementById('settings-server-error');
+            const okEl = document.getElementById('settings-server-success');
+            errEl.classList.add('hidden');
+            okEl.classList.add('hidden');
+
+            const btn = document.getElementById('settings-test-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div>';
+
+            let url = document.getElementById('settings-server-url').value.trim();
+            if (url.endsWith('/')) url = url.slice(0, -1);
+            if (!url.startsWith('http://') && !url.startsWith('https://')) url = `http://${url}`;
+            if (!/:\d+$/.test(url)) url = `${url}:3000`;
+            document.getElementById('settings-server-url').value = url;
+            setApiUrl(url);
+
+            const result = await healthCheck();
+            btn.disabled = false;
+            btn.textContent = 'Save & Test';
+
+            if (result.ok) {
+                okEl.classList.remove('hidden');
+                okEl.textContent = '✅ Connected successfully!';
+                showToast('Server URL saved!');
+            } else {
+                errEl.classList.remove('hidden');
+                errEl.textContent = `Connection failed. Check that the backend is running at ${url}`;
+            }
+        }
+
+        // ── Change Password ──
+        async function changePassword() {
+            const errEl = document.getElementById('pw-error');
+            const okEl = document.getElementById('pw-success');
+            errEl.classList.add('hidden');
+            okEl.classList.add('hidden');
+
+            const currentPw = document.getElementById('current-password').value;
+            const newPw = document.getElementById('new-password').value;
+            const confirmPw = document.getElementById('confirm-new-password').value;
+
+            if (!currentPw || !newPw) {
+                errEl.classList.remove('hidden');
+                errEl.textContent = 'Please fill in all fields.';
+                return;
+            }
+
+            if (newPw.length < 6) {
+                errEl.classList.remove('hidden');
+                errEl.textContent = 'New password must be at least 6 characters.';
+                return;
+            }
+
+            if (newPw !== confirmPw) {
+                errEl.classList.remove('hidden');
+                errEl.textContent = 'New passwords do not match.';
+                return;
+            }
+
+            const btn = document.getElementById('change-pw-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div>';
+
+            try {
+                await authAPI.changePassword(currentPw, newPw);
+                okEl.classList.remove('hidden');
+                okEl.textContent = '✅ Password changed successfully!';
+                document.getElementById('current-password').value = '';
+                document.getElementById('new-password').value = '';
+                document.getElementById('confirm-new-password').value = '';
+                showToast('Password changed!');
+            } catch (err) {
+                errEl.classList.remove('hidden');
+                errEl.textContent = err.message || 'Failed to change password.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Change Password';
+            }
+        }
+
+        // ── Delete Account ──
+        async function deleteAccount() {
+            const confirmed = confirm('⚠️ Are you ABSOLUTELY sure?\n\nThis will permanently delete your account and ALL your tasks, API keys, and data.\n\nThis action CANNOT be undone.');
+            if (!confirmed) return;
+
+            const doubleConfirm = prompt('Type your username to confirm deletion:');
+            const usernameEl = document.getElementById('settings-username');
+            if (doubleConfirm !== usernameEl.textContent) {
+                showToast('Username did not match. Account NOT deleted.', 'warning');
+                return;
+            }
+
+            try {
+                await authAPI.deleteAccount();
+                authAPI.logout();
+                showToast('Account deleted.', 'success');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+            } catch (err) {
+                showToast(err.message || 'Failed to delete account.', 'error');
+            }
+        }
+
+        // ── Logout ──
+        function logoutFromSettings() {
+            authAPI.logout();
+            window.location.href = 'login.html';
+        }
+    </script>
+
+</body>
+
+</html>
