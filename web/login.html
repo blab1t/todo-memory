@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Todo Memory – Your second brain, everywhere. Login to manage your tasks.">
     <title>Todo Memory – Login</title>
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 
 <body>
@@ -37,22 +37,26 @@
                 <!-- Password -->
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
-                    <div class="password-wrapper">
+                    <div class="password-wrapper"
+                        style="display: flex !important; align-items: center !important; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); overflow: hidden;">
                         <input type="password" class="input" id="password" placeholder="Enter your password" required
-                            autocomplete="current-password">
+                            autocomplete="current-password"
+                            style="flex: 1 !important; width: auto !important; background: transparent !important; border: none !important; box-shadow: none !important; margin: 0 !important;">
                         <button type="button" class="password-toggle" onclick="togglePassword('password', this)"
-                            title="Show Password">👁️</button>
+                            title="Show Password" style="flex-shrink: 0 !important;">👁️</button>
                     </div>
                 </div>
 
                 <!-- Confirm password (register only) -->
                 <div class="form-group hidden" id="confirm-group">
                     <label class="form-label" for="confirm-password">Confirm Password</label>
-                    <div class="password-wrapper">
+                    <div class="password-wrapper"
+                        style="display: flex !important; align-items: center !important; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); overflow: hidden;">
                         <input type="password" class="input" id="confirm-password" placeholder="Confirm your password"
-                            autocomplete="new-password">
+                            autocomplete="new-password"
+                            style="flex: 1 !important; width: auto !important; background: transparent !important; border: none !important; box-shadow: none !important; margin: 0 !important;">
                         <button type="button" class="password-toggle" onclick="togglePassword('confirm-password', this)"
-                            title="Show Password">👁️</button>
+                            title="Show Password" style="flex-shrink: 0 !important;">👁️</button>
                     </div>
                 </div>
 
@@ -70,7 +74,7 @@
 
     <div class="toast-container" id="toast-container"></div>
 
-    <script src="api.js?v=2"></script>
+    <script src="api.js?v=3"></script>
     <script>
         // ── State ──
         let isLoginMode = true;

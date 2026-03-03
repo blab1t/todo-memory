@@ -326,9 +326,10 @@ body {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  flex: 1;
-  width: auto;
-  padding-right: 4px;
+  flex: 1 !important;
+  width: auto !important;
+  padding-right: 4px !important;
+  margin: 0 !important;
 }
 
 .password-toggle {
