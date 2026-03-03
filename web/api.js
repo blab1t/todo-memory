@@ -94,8 +94,8 @@ const authAPI = {
     },
 
     deleteAccount(password) {
-        return request('/api/auth/account', {
-            method: 'DELETE',
+        return request('/api/auth/account/delete', {
+            method: 'POST',
             body: JSON.stringify({ password }),
         });
     },

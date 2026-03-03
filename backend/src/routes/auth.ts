@@ -151,7 +151,7 @@ router.put('/username', authMiddleware, async (req: AuthRequest, res: Response) 
 });
 
 // Delete account
-router.delete('/account', authMiddleware, async (req: AuthRequest, res: Response) => {
+router.post('/account/delete', authMiddleware, async (req: AuthRequest, res: Response) => {
     try {
         const { password } = req.body;
         const userId = req.userId;
