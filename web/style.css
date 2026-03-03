@@ -307,16 +307,27 @@ body {
   position: relative;
   display: flex;
   align-items: center;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  transition: all .2s ease;
+  width: 100%;
+}
+
+.password-wrapper:focus-within {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 .password-wrapper .input {
-  padding-right: 48px;
-  /* Room for the button */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding-right: 4px;
+  /* Space before button */
 }
 
 .password-toggle {
-  position: absolute;
-  right: 12px;
   background: none;
   border: none;
   color: var(--text-muted);
@@ -325,10 +336,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
+  padding: 8px 12px;
   border-radius: 6px;
   transition: all .2s;
   z-index: 2;
+  user-select: none;
 }
 
 .password-toggle:hover {
