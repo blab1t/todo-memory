@@ -37,15 +37,23 @@
                 <!-- Password -->
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
-                    <input type="password" class="input" id="password" placeholder="Enter your password" required
-                        autocomplete="current-password">
+                    <div class="password-wrapper">
+                        <input type="password" class="input" id="password" placeholder="Enter your password" required
+                            autocomplete="current-password">
+                        <button type="button" class="password-toggle" onclick="togglePassword('password', this)"
+                            title="Show Password">👁️</button>
+                    </div>
                 </div>
 
                 <!-- Confirm password (register only) -->
                 <div class="form-group hidden" id="confirm-group">
                     <label class="form-label" for="confirm-password">Confirm Password</label>
-                    <input type="password" class="input" id="confirm-password" placeholder="Confirm your password"
-                        autocomplete="new-password">
+                    <div class="password-wrapper">
+                        <input type="password" class="input" id="confirm-password" placeholder="Confirm your password"
+                            autocomplete="new-password">
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirm-password', this)"
+                            title="Show Password">👁️</button>
+                    </div>
                 </div>
 
                 <!-- Submit -->
@@ -96,7 +104,7 @@
         async function checkConnection() {
             const result = await healthCheck();
             isConnected = result.ok;
-            updateConnectionUI();
+            // updateConnectionUI();
         }
 
         function updateConnectionUI() {
@@ -105,6 +113,19 @@
                 connSuccess.textContent = `✅ Connected to Todo Memory`;
             } else {
                 connSuccess.classList.add('hidden');
+            }
+        }
+
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🔒';
+                btn.title = 'Hide Password';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁️';
+                btn.title = 'Show Password';
             }
         }
 

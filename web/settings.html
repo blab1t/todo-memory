@@ -48,15 +48,28 @@
                 <div class="settings-section__title">Change Password</div>
                 <div class="form-group settings-form-group-small">
                     <label class="form-label" for="current-password">Current Password</label>
-                    <input type="password" class="input" id="current-password" placeholder="Enter current password">
+                    <div class="password-wrapper">
+                        <input type="password" class="input" id="current-password" placeholder="Enter current password">
+                        <button type="button" class="password-toggle" onclick="togglePassword('current-password', this)"
+                            title="Show Password">👁️</button>
+                    </div>
                 </div>
                 <div class="form-group settings-form-group-small">
                     <label class="form-label" for="new-password">New Password</label>
-                    <input type="password" class="input" id="new-password" placeholder="Enter new password">
+                    <div class="password-wrapper">
+                        <input type="password" class="input" id="new-password" placeholder="Enter new password">
+                        <button type="button" class="password-toggle" onclick="togglePassword('new-password', this)"
+                            title="Show Password">👁️</button>
+                    </div>
                 </div>
                 <div class="form-group settings-form-group">
                     <label class="form-label" for="confirm-new-password">Confirm New Password</label>
-                    <input type="password" class="input" id="confirm-new-password" placeholder="Confirm new password">
+                    <div class="password-wrapper">
+                        <input type="password" class="input" id="confirm-new-password"
+                            placeholder="Confirm new password">
+                        <button type="button" class="password-toggle"
+                            onclick="togglePassword('confirm-new-password', this)" title="Show Password">👁️</button>
+                    </div>
                 </div>
                 <button class="btn btn--primary" id="change-pw-btn" onclick="changePassword()">Change Password</button>
                 <div class="alert alert--error hidden settings-alert" id="pw-error"></div>
@@ -81,8 +94,12 @@
                 </p>
                 <div class="form-group settings-form-group">
                     <label class="form-label" for="delete-confirm-password">Enter Password to Confirm</label>
-                    <input type="password" class="input" id="delete-confirm-password"
-                        placeholder="Confirm your password">
+                    <div class="password-wrapper">
+                        <input type="password" class="input" id="delete-confirm-password"
+                            placeholder="Confirm your password">
+                        <button type="button" class="password-toggle"
+                            onclick="togglePassword('delete-confirm-password', this)" title="Show Password">👁️</button>
+                    </div>
                 </div>
                 <button class="btn btn--danger" onclick="deleteAccount()">Delete My Account</button>
             </div>
@@ -114,6 +131,19 @@
                 return;
             }
         })();
+
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🔒';
+                btn.title = 'Hide Password';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁️';
+                btn.title = 'Show Password';
+            }
+        }
 
         // ── Change Password ──
         async function changePassword() {
