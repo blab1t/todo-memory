@@ -433,49 +433,6 @@ function editApiKey(keyId) {
     if (key) openApiKeyModal(key);
 }
 
-// ── Server Settings Modal ──
-
-function showServerSettingsModal() {
-    document.getElementById('modal-server-url').value = getApiUrl();
-    document.getElementById('server-modal-error').classList.add('hidden');
-    document.getElementById('server-modal').classList.remove('hidden');
-}
-
-function closeServerModal() {
-    document.getElementById('server-modal').classList.add('hidden');
-}
-
-async function saveServerUrl() {
-    const errEl = document.getElementById('server-modal-error');
-    errEl.classList.add('hidden');
-
-    let url = document.getElementById('modal-server-url').value.trim();
-    if (url.endsWith('/')) url = url.slice(0, -1);
-    if (!url.startsWith('http://') && !url.startsWith('https://')) url = `http://${url}`;
-    if (!/:\d+$/.test(url)) url = `${url}:3000`;
-
-    document.getElementById('modal-server-url').value = url;
-
-    const btn = document.getElementById('server-save-btn');
-    btn.disabled = true;
-    btn.innerHTML = '<div class="spinner"></div>';
-
-    setApiUrl(url);
-    const result = await healthCheck();
-
-    btn.disabled = false;
-    btn.textContent = 'Save & Test';
-
-    if (result.ok) {
-        closeServerModal();
-        showToast('Connected to server!');
-        await loadCategories();
-    } else {
-        errEl.classList.remove('hidden');
-        errEl.textContent = `Connection failed. Make sure the backend is running at ${url}`;
-    }
-}
-
 // ── Logout ──
 
 function handleLogout() {
@@ -510,6 +467,5 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeTaskModal();
         closeApiKeyModal();
-        closeServerModal();
     }
 });

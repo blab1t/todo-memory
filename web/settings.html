@@ -43,21 +43,6 @@
                 <button class="btn btn--primary" onclick="changeUsername()">Update Username</button>
             </div>
 
-            <!-- Server Settings -->
-            <div class="settings-section">
-                <div class="settings-section__title">Server Connection</div>
-                <div class="form-group settings-form-group">
-                    <label class="form-label" for="settings-server-url">Server URL</label>
-                    <input type="text" class="input" id="settings-server-url" placeholder="http://192.168.1.133:3000">
-                </div>
-                <div class="settings-button-group">
-                    <button class="btn btn--primary settings-button-flex" id="settings-test-btn"
-                        onclick="testServerConnection()">Save & Test</button>
-                </div>
-                <div class="alert alert--error hidden settings-alert" id="settings-server-error"></div>
-                <div class="alert alert--success hidden settings-alert" id="settings-server-success"></div>
-            </div>
-
             <!-- Change Password -->
             <div class="settings-section">
                 <div class="settings-section__title">Change Password</div>
@@ -128,50 +113,7 @@
                 window.location.href = 'login.html';
                 return;
             }
-            document.getElementById('settings-server-url').value = getApiUrl();
         })();
-
-        // ── Server URL ──
-        async function testServerConnection() {
-            const errEl = document.getElementById('settings-server-error');
-            const okEl = document.getElementById('settings-server-success');
-            errEl.classList.add('hidden');
-            okEl.classList.add('hidden');
-
-            const btn = document.getElementById('settings-test-btn');
-            btn.disabled = true;
-            btn.innerHTML = '<div class="spinner"></div>';
-
-            let url = document.getElementById('settings-server-url').value.trim();
-            if (url.endsWith('/')) url = url.slice(0, -1);
-
-            // Smart protocol autocomplete (required for fetch)
-            if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                // Use http for localhost/IPs, https for everything else (domains)
-                const isIP = /^(\d{1,3}\.){3}\d{1,3}/.test(url) || url.startsWith('localhost');
-                url = isIP ? `http://${url}` : `https://${url}`;
-            }
-
-            // Only auto-add :3000 if it's a local IP and explicitly has no port
-            if ((url.includes('localhost') || /^http:\/\/(\d{1,3}\.){3}\d{1,3}/.test(url)) && !/:\d+$/.test(url)) {
-                url = `${url}:3000`;
-            }
-            document.getElementById('settings-server-url').value = url;
-            setApiUrl(url);
-
-            const result = await healthCheck();
-            btn.disabled = false;
-            btn.textContent = 'Save & Test';
-
-            if (result.ok) {
-                okEl.classList.remove('hidden');
-                okEl.textContent = '✅ Connected successfully!';
-                showToast('Server URL saved!');
-            } else {
-                errEl.classList.remove('hidden');
-                errEl.textContent = `Connection failed. Check that the backend is running at ${url}`;
-            }
-        }
 
         // ── Change Password ──
         async function changePassword() {

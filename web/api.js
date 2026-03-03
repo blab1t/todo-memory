@@ -7,13 +7,8 @@ const STORAGE_KEYS = {
     AUTH_TOKEN: 'todo_auth_token',
 };
 
-let API_URL = localStorage.getItem(STORAGE_KEYS.API_URL) || 'https://todo-api.blabit.dev';
+const API_URL = 'https://todo-api.blabit.dev';
 let AUTH_TOKEN = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN) || null;
-
-function setApiUrl(url) {
-    API_URL = url;
-    localStorage.setItem(STORAGE_KEYS.API_URL, url);
-}
 
 function getApiUrl() {
     return API_URL;
