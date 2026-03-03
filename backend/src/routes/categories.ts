@@ -17,7 +17,12 @@ interface Category {
 // Get all categories
 router.get('/', (req: AuthRequest, res: Response) => {
     try {
-        const categories = db.prepare('SELECT * FROM categories ORDER BY name ASC').all() as Category[];
+        let categories = db.prepare('SELECT * FROM categories ORDER BY name ASC').all() as Category[];
+
+        // Restriction: Only 'Lando' sees the APIs category
+        if (req.username !== 'Lando') {
+            categories = categories.filter(c => c.name !== 'APIs');
+        }
 
         const parsed = categories.map(cat => ({
             ...cat,

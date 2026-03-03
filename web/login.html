@@ -54,7 +54,7 @@
 
             <!-- Mode toggle -->
             <div class="auth-card__footer" id="auth-footer">
-                Don't have an account?
+                <span id="toggle-text">Don't have an account?</span>
                 <button class="auth-card__link" id="auth-toggle" type="button">Sign up</button>
             </div>
         </div>
@@ -70,13 +70,12 @@
 
         // ── Elements ──
         const authForm = document.getElementById('auth-form');
-        const authCard = document.getElementById('auth-card');
         const authError = document.getElementById('auth-error');
         const connSuccess = document.getElementById('conn-success');
         const confirmGroup = document.getElementById('confirm-group');
         const authSubmit = document.getElementById('auth-submit');
         const authToggle = document.getElementById('auth-toggle');
-        const authFooter = document.getElementById('auth-footer');
+        const toggleText = document.getElementById('toggle-text');
 
         // ── Init ──
         (async function init() {
@@ -117,18 +116,14 @@
             if (isLoginMode) {
                 confirmGroup.classList.add('hidden');
                 authSubmit.textContent = 'Sign In';
-                authFooter.innerHTML = `Don't have an account? <button class="auth-card__link" id="auth-toggle" type="button">Sign up</button>`;
+                toggleText.textContent = "Don't have an account?";
+                authToggle.textContent = 'Sign up';
             } else {
                 confirmGroup.classList.remove('hidden');
                 authSubmit.textContent = 'Create Account';
-                authFooter.innerHTML = 'Already have an account? <button class="auth-card__link" id="auth-toggle" type="button">Sign in</button>';
+                toggleText.textContent = 'Already have an account?';
+                authToggle.textContent = 'Sign in';
             }
-
-            // Re-bind the new toggle button
-            document.getElementById('auth-toggle').addEventListener('click', () => {
-                isLoginMode = !isLoginMode;
-                authToggle.click(); // defer to main handler
-            });
         });
 
         // ── Form submit ──
