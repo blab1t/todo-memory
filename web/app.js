@@ -36,6 +36,17 @@ async function loadCategories() {
     try {
         const data = await categoriesAPI.getAll();
         categories = data.categories;
+
+        // Restriction: Only 'Lando' sees the APIs category
+        try {
+            const userData = await authAPI.me();
+            if (userData.user.username !== 'Lando') {
+                categories = categories.filter(c => c.name !== 'APIs');
+            }
+        } catch (authErr) {
+            console.error('Failed to check user for category restrictions', authErr);
+        }
+
         renderCategories();
 
         // Default to ToDo

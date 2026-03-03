@@ -7,7 +7,7 @@ const STORAGE_KEYS = {
     AUTH_TOKEN: 'todo_auth_token',
 };
 
-let API_URL = localStorage.getItem(STORAGE_KEYS.API_URL) || 'http://100.124.102.52:3000';
+let API_URL = localStorage.getItem(STORAGE_KEYS.API_URL) || 'https://todo-api.blabit.dev';
 let AUTH_TOKEN = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN) || null;
 
 function setApiUrl(url) {
@@ -91,9 +91,17 @@ const authAPI = {
         });
     },
 
-    deleteAccount() {
+    changeUsername(newUsername) {
+        return request('/api/auth/username', {
+            method: 'PUT',
+            body: JSON.stringify({ newUsername }),
+        });
+    },
+
+    deleteAccount(password) {
         return request('/api/auth/account', {
             method: 'DELETE',
+            body: JSON.stringify({ password }),
         });
     },
 

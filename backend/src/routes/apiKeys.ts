@@ -6,6 +6,15 @@ import { AuthRequest, authMiddleware } from '../middleware/auth';
 const router = Router();
 router.use(authMiddleware);
 
+// Restriction: Only 'Lando' can manage API keys
+router.use((req: AuthRequest, res: Response, next) => {
+    if (req.username !== 'Lando') {
+        res.status(403).json({ error: 'Access denied. Only "Lando" can manage API keys.' });
+        return;
+    }
+    next();
+});
+
 interface ApiKey {
     id: string;
     category_id: string;

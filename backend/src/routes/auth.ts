@@ -125,10 +125,53 @@ router.put('/password', authMiddleware, async (req: AuthRequest, res: Response) 
     }
 });
 
+// Change username
+router.put('/username', authMiddleware, async (req: AuthRequest, res: Response) => {
+    try {
+        const { newUsername } = req.body;
+
+        if (!newUsername) {
+            res.status(400).json({ error: 'New username is required' });
+            return;
+        }
+
+        // Check if username taken
+        const existing = db.prepare('SELECT id FROM users WHERE username = ? AND id != ?').get(newUsername, req.userId);
+        if (existing) {
+            res.status(400).json({ error: 'Username already taken' });
+            return;
+        }
+
+        db.prepare('UPDATE users SET username = ? WHERE id = ?').run(newUsername, req.userId);
+        res.json({ message: 'Username updated successfully', username: newUsername });
+    } catch (error) {
+        console.error('Username change error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 // Delete account
 router.delete('/account', authMiddleware, async (req: AuthRequest, res: Response) => {
     try {
+        const { password } = req.body;
         const userId = req.userId;
+
+        if (!password) {
+            res.status(400).json({ error: 'Password is required to delete account' });
+            return;
+        }
+
+        const user = db.prepare('SELECT password_hash FROM users WHERE id = ?').get(userId) as any;
+        if (!user) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
+
+        const validPassword = await bcrypt.compare(password, user.password_hash);
+        if (!validPassword) {
+            res.status(401).json({ error: 'Incorrect password' });
+            return;
+        }
 
         // Delete all user data in a transaction
         const deleteAll = db.transaction(() => {

@@ -41,15 +41,17 @@
   --border-radius-sm: 8px;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
+html,
+body {
+  min-height: 100%;
 }
 
 body {
@@ -65,37 +67,76 @@ body {
    Scrollbar
    ================================ */
 
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-secondary); }
-::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent-secondary); }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
 
 /* ================================
    Animations
    ================================ */
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* ================================
@@ -118,7 +159,7 @@ body {
   position: absolute;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(99,102,241,0.15), transparent 70%);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent 70%);
   top: -200px;
   right: -200px;
 }
@@ -128,7 +169,7 @@ body {
   position: absolute;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(139,92,246,0.1), transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1), transparent 70%);
   bottom: -100px;
   left: -100px;
 }
@@ -231,7 +272,8 @@ body {
   text-transform: uppercase;
 }
 
-.input, .textarea {
+.input,
+.textarea {
   width: 100%;
   padding: 12px 16px;
   font-family: var(--font-body);
@@ -244,12 +286,14 @@ body {
   transition: all .2s ease;
 }
 
-.input:focus, .textarea:focus {
+.input:focus,
+.textarea:focus {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-.input::placeholder, .textarea::placeholder {
+.input::placeholder,
+.textarea::placeholder {
   color: var(--text-muted);
 }
 
@@ -287,12 +331,12 @@ body {
 .btn--primary {
   background: var(--gradient-primary);
   color: white;
-  box-shadow: 0 4px 16px rgba(99,102,241,0.4);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
 }
 
 .btn--primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(99,102,241,0.5);
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
 }
 
 .btn--primary:disabled {
@@ -359,25 +403,25 @@ body {
 }
 
 .alert--error {
-  background: rgba(239,68,68,0.1);
+  background: rgba(239, 68, 68, 0.1);
   border: 1px solid var(--accent-danger);
   color: var(--accent-danger);
 }
 
 .alert--warning {
-  background: rgba(245,158,11,0.1);
+  background: rgba(245, 158, 11, 0.1);
   border: 1px solid var(--accent-warning);
   color: var(--accent-warning);
 }
 
 .alert--success {
-  background: rgba(16,185,129,0.1);
+  background: rgba(16, 185, 129, 0.1);
   border: 1px solid var(--accent-success);
   color: var(--accent-success);
 }
 
 .alert--info {
-  background: rgba(6,182,212,0.1);
+  background: rgba(6, 182, 212, 0.1);
   border: 1px solid var(--accent-tertiary);
   color: var(--accent-tertiary);
 }
@@ -502,7 +546,7 @@ body {
 }
 
 .sidebar__footer-btn:hover {
-  background: rgba(239,68,68,0.1);
+  background: rgba(239, 68, 68, 0.1);
   color: var(--accent-danger);
 }
 
@@ -652,9 +696,17 @@ body {
   color: var(--text-secondary);
 }
 
-.task-item__due--overdue { color: var(--accent-danger); }
-.task-item__due--today { color: var(--accent-warning); }
-.task-item__repeat { color: var(--accent-tertiary); }
+.task-item__due--overdue {
+  color: var(--accent-danger);
+}
+
+.task-item__due--today {
+  color: var(--accent-warning);
+}
+
+.task-item__repeat {
+  color: var(--accent-tertiary);
+}
 
 .task-item__actions {
   display: flex;
@@ -694,7 +746,7 @@ body {
 
 .api-key-card:hover {
   border-color: var(--accent-success);
-  box-shadow: 0 0 20px rgba(16,185,129,0.2);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
 }
 
 .api-key-card__header {
@@ -774,7 +826,7 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -783,7 +835,9 @@ body {
   animation: fadeIn .2s ease;
 }
 
-.modal-overlay.hidden { display: none; }
+.modal-overlay.hidden {
+  display: none;
+}
 
 .modal {
   background: var(--bg-secondary);
@@ -876,19 +930,19 @@ body {
 }
 
 .toast--success {
-  background: rgba(16,185,129,0.15);
+  background: rgba(16, 185, 129, 0.15);
   border: 1px solid var(--accent-success);
   color: var(--accent-success);
 }
 
 .toast--error {
-  background: rgba(239,68,68,0.15);
+  background: rgba(239, 68, 68, 0.15);
   border: 1px solid var(--accent-danger);
   color: var(--accent-danger);
 }
 
 .toast--warning {
-  background: rgba(245,158,11,0.15);
+  background: rgba(245, 158, 11, 0.15);
   border: 1px solid var(--accent-warning);
   color: var(--accent-warning);
 }
@@ -943,16 +997,299 @@ body {
    Utilities
    ================================ */
 
-.hidden { display: none !important; }
-.text-center { text-align: center; }
-.text-muted { color: var(--text-muted); }
-.mt-auto { margin-top: auto; }
-.gap-sm { gap: 8px; }
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.w-full { width: 100%; }
+.hidden {
+  display: none !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.gap-sm {
+  gap: 8px;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* ================================
+   Settings Page
+   ================================ */
+
+/* The main container for the settings page viewport */
+.settings-page {
+  /* Set minimum height to fully cover the screen height */
+  min-height: 100vh;
+  /* Use the dark primary background color variable */
+  background: var(--bg-primary);
+  /* Allow vertical scrolling if content is too long */
+  overflow-y: auto;
+}
+
+/* The top navigation bar inside the settings page */
+.settings-nav {
+  /* Use flexbox layout for aligning elements */
+  display: flex;
+  /* Center items (logo and back link) vertically */
+  align-items: center;
+  /* Push logo to the left and back link to the right */
+  justify-content: space-between;
+  /* Add vertical and horizontal padding */
+  padding: 16px 28px;
+  /* Set a slightly lighter secondary background */
+  background: var(--bg-secondary);
+  /* Draw a subtle separator line at the bottom */
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* The text logo inside the settings navigation */
+.settings-nav__brand {
+  /* Use the futuristic display font */
+  font-family: var(--font-display);
+  /* Set font size to 14px */
+  font-size: 14px;
+  /* Set font to semi-bold */
+  font-weight: 600;
+  /* Add spacing between letters for a tech feel */
+  letter-spacing: 2px;
+  /* Apply the primary purple-blue gradient */
+  background: var(--gradient-primary);
+  /* Clip the background to the text (Webkit) */
+  -webkit-background-clip: text;
+  /* Clip the background to the text (Standard) */
+  background-clip: text;
+  /* Hide the actual text color to reveal the gradient */
+  -webkit-text-fill-color: transparent;
+  /* Remove default link underline */
+  text-decoration: none;
+}
+
+/* The "Back" link in the settings navigation */
+.settings-nav__back {
+  /* Use flexbox to align icon and text */
+  display: flex;
+  /* Center items vertically */
+  align-items: center;
+  /* Add small spacing between the arrow and text */
+  gap: 8px;
+  /* Use muted text color by default */
+  color: var(--text-secondary);
+  /* Remove default link underline */
+  text-decoration: none;
+  /* Use standard body font */
+  font-family: var(--font-body);
+  /* Set font size to 14px */
+  font-size: 14px;
+  /* Animate color transitions smoothly */
+  transition: color .2s;
+}
+
+/* Hover state for the "Back" link */
+.settings-nav__back:hover {
+  /* Brighten text color on hover */
+  color: var(--text-primary);
+}
+
+/* The wrapper that centers the settings content */
+.settings-container {
+  /* Constrain the maximum width so it's readable */
+  max-width: 600px;
+  /* Center the block horizontally */
+  margin: 0 auto;
+  /* Add vertical spacing and mobile padding */
+  padding: 32px 20px;
+}
+
+/* The large headline on the settings page */
+.settings-title {
+  /* Use futuristic display font */
+  font-family: var(--font-display);
+  /* Set a large font size */
+  font-size: 24px;
+  /* Make the text bold */
+  font-weight: 700;
+  /* Add a little letter spacing */
+  letter-spacing: 1px;
+  /* Add spacing below the title */
+  margin-bottom: 32px;
+}
+
+/* A card grouping related settings (e.g., Account) */
+.settings-section {
+  /* Apply a semi-transparent card background */
+  background: var(--bg-card);
+  /* Add a subtle dark border */
+  border: 1px solid var(--border-color);
+  /* Round the corners of the card */
+  border-radius: var(--border-radius);
+  /* Add breathing room inside the card */
+  padding: 24px;
+  /* Add spacing between multiple sections */
+  margin-bottom: 20px;
+  /* Apply a glass blur effect behind the card */
+  backdrop-filter: blur(10px);
+}
+
+/* The title inside a settings card */
+.settings-section__title {
+  /* Use futuristic display font */
+  font-family: var(--font-display);
+  /* Set small font size for section labels */
+  font-size: 13px;
+  /* Make the text semi-bold */
+  font-weight: 600;
+  /* Stretch the letters slightly */
+  letter-spacing: 1px;
+  /* Keep text uppercase for a tech look */
+  text-transform: uppercase;
+  /* Use a muted text color */
+  color: var(--text-muted);
+  /* Add margin below to separate from inputs */
+  margin-bottom: 20px;
+}
+
+/* A flex row displaying read-only info (Label vs Value) */
+.settings-info {
+  /* Arrange children in a horizontal row */
+  display: flex;
+  /* Push label left and value right */
+  justify-content: space-between;
+  /* Align items vertically */
+  align-items: center;
+  /* Add vertical padding */
+  padding: 12px 0;
+  /* Add a separator line below the row */
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Special rule for the last info row in a card */
+.settings-info:last-child {
+  /* Remove the border so it doesn't double-up with padding */
+  border-bottom: none;
+}
+
+/* The label on the left of an info row */
+.settings-info__label {
+  /* Set a small font size */
+  font-size: 13px;
+  /* Use a subdued color */
+  color: var(--text-muted);
+  /* Capitalize letters natively */
+  text-transform: uppercase;
+  /* Add a small letter spacing */
+  letter-spacing: .5px;
+}
+
+/* The value on the right of an info row */
+.settings-info__value {
+  /* Make text semi-bold to stand out */
+  font-weight: 600;
+  /* Use the bright primary text color */
+  color: var(--text-primary);
+}
+
+/* Highlights the "Danger Zone" block */
+.danger-zone {
+  /* Replace the normal border with a reddish tint */
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* The text inside the "Danger Zone" title */
+.danger-zone .settings-section__title {
+  /* Make the title text red */
+  color: var(--accent-danger);
+}
+
+/* Layout class for form spacing in settings */
+.settings-form-group {
+  /* Set spacing below an input group */
+  margin-bottom: 16px;
+}
+
+/* Tighter layout class for grouped inputs (like passwords) */
+.settings-form-group-small {
+  /* Set smaller spacing below an input group */
+  margin-bottom: 12px;
+}
+
+/* Group wrapper for multiple buttons */
+.settings-button-group {
+  /* Display buttons next to each other */
+  display: flex;
+  /* Add horizontal gap between buttons */
+  gap: 12px;
+}
+
+/* Stretches a button to fill container space */
+.settings-button-flex {
+  /* Allow button to stretch naturally */
+  flex: 1;
+}
+
+/* Wrapper for success/error alerts */
+.settings-alert {
+  /* Ensure alert doesn't touch the element above it */
+  margin-top: 12px;
+}
+
+/* Small description text like 'Themes coming soon' */
+.settings-appearance-desc {
+  /* Use a small font size */
+  font-size: 13px;
+  /* Use a muted color */
+  color: var(--text-muted);
+  /* Push down slightly from above content */
+  margin-top: 8px;
+}
+
+/* Warning text inside the Danger Zone */
+.settings-danger-desc {
+  /* Use a readable 14px size */
+  font-size: 14px;
+  /* Use a dark-but-visible text color */
+  color: var(--text-secondary);
+  /* Separate text from the deletion button below */
+  margin-bottom: 16px;
+}
+
+/* Layout container centering the logout button */
+.settings-logout-wrapper {
+  /* Center contents inline */
+  text-align: center;
+  /* Add spacing from elements above */
+  margin-top: 12px;
+}
+
+/* Enforces the logout button takes full width */
+.settings-logout-btn {
+  /* Set width to 100% of parent container */
+  width: 100%;
+}
 
 /* ================================
    Mobile Menu Toggle
@@ -972,7 +1309,7 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 99;
 }
 
@@ -985,7 +1322,7 @@ body {
     padding: 32px 24px;
     margin: 16px;
   }
-  
+
   .auth-card__logo h1 {
     font-size: 22px;
   }
@@ -1001,7 +1338,7 @@ body {
     bottom: 0;
     z-index: 100;
     transition: left .3s ease;
-    box-shadow: 4px 0 24px rgba(0,0,0,0.5);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
   }
 
   .sidebar.open {
